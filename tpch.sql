@@ -51,8 +51,38 @@ CREATE TABLE team (
     team_division TEXT
 );
 
+CREATE TABLE team_season (
+    ts_season_id INTEGER,
+    ts_team_id INTEGER,
+    ts_wins INTEGER,
+    ts_losses INTEGER,
+    ts_wl DECIMAL,
+    ts_finish TEXT,
+    ts_srs DECIMAL,
+    ts_pace DECIMAL,
+    ts_rpace DECIMAL,
+    ts_ortg DECIMAL,
+    ts_rortg DECIMAL,
+    ts_drtg DECIMAL,
+    ts_rdrtg DECIMAL
+);
+
+CREATE TABLE season (
+    season_id INTEGER,
+    season_team_id INTEGER,
+    season_mvp INTEGER,
+    season_rookie INTEGER,
+    season_point INTEGER,
+    season_rbs INTEGER,
+    season_ast INTEGER,
+    season_wins INTEGER
+);
+
+
 
 .import data/player.db player
+.import data/season.db season
 .import data/player_stats.db player_stats
 .import data/state.db state
 .import data/team.db team
+.import data/team_season.db team_season
