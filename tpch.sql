@@ -13,6 +13,8 @@ CREATE TABLE player_stats (
     ps_team_id INTEGER,
     ps_g INTEGER,
     ps_gs INTEGER,
+    ps_mp DECIMAL,
+    ps_fg DECIMAL,
     ps_fga DECIMAL,
     ps_fgp DECIMAL,
     ps_3p DECIMAL,
@@ -35,6 +37,7 @@ CREATE TABLE player_stats (
     ps_pf DECIMAL,
     ps_pts DECIMAL
 );
+
 
 .import data/player.db player
 .import data/player_stats.db player_stats
