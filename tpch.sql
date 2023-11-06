@@ -95,3 +95,4 @@ CREATE TABLE game (
 .import data/state.db state
 .import data/team.db team
 .import data/team_season.db team_season
+.import data/game.db game
