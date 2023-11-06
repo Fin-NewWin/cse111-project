@@ -38,6 +38,21 @@ CREATE TABLE player_stats (
     ps_pts DECIMAL
 );
 
+CREATE TABLE state (
+    state_id INTEGER,
+    state_name TEXT
+);
+
+CREATE TABLE team (
+    team_id INTEGER,
+    team_name TEXT,
+    team_mascot TEXT,
+    team_state_id INTEGER,
+    team_division TEXT
+);
+
 
 .import data/player.db player
 .import data/player_stats.db player_stats
+.import data/state.db state
+.import data/team.db team
