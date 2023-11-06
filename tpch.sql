@@ -78,6 +78,15 @@ CREATE TABLE season (
     season_wins INTEGER
 );
 
+CREATE TABLE game (
+    game_id INTEGER,
+    game_season_id INTEGER,
+    game_home_team_id INTEGER,
+    game_home_pts INTEGER,
+    game_away_team_id INTEGER,
+    game_away_pts INTEGER
+);
+
 
 
 .import data/player.db player
