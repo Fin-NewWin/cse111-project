@@ -131,3 +131,158 @@ WHERE
     player_id = ps_player_id
 GROUP BY
     player_name;
+
+-- 11. Get all stats of player searched
+SELECT
+    *
+FROM
+    player,
+    player_stats
+WHERE
+    player_name = 'Lebron James'
+    AND 
+    player_id = ps_player_id;
+
+-- 12. Player with avg higher in each season
+
+SELECT
+    player_name as player,
+    ps_season_id as season,
+    ps_pts,
+    ps_blk
+FROM
+    player,
+    player_stats,
+    (SELECT AVG(ps_pts) as avg_pts FROM player_stats),
+    (SELECT AVG(ps_blk) as avg_blk FROM player_stats)
+WHERE
+    player_id = ps_player_id
+    AND
+    ps_pts > avg_pts
+    AND
+    ps_blk > avg_blk
+GROUP BY 
+    player_name,
+    ps_season_id;
+
+-- 13. Retrieve All Triple-Doubles in a Season:
+SELECT
+    player_name as player,
+    ps_season_id as season
+FROM
+    player,
+    player_stats
+WHERE
+    player_id = ps_player_id
+    AND
+    ps_pts >= 10
+    AND
+    ps_ast >= 10
+    AND
+    ps_trb >= 10
+GROUP BY
+    player_name,
+    ps_season_id;
+
+-- 14. Show all player who played the most
+SELECT
+    player_name as player,
+    ps_season_id as season,
+    MAX(ps_pts) as pts
+FROM
+    player,
+    player_stats
+WHERE
+    player_id = ps_player_id
+GROUP BY
+    player_name,
+    ps_season_id;
+
+-- 15. Show player with best points/minute
+SELECT
+    player_name as player,
+    ps_season_id as season,
+    MAX(ps_pts/ps_mp) as pts_per_min
+FROM
+    player,
+    player_stats
+WHERE
+    player_id = ps_player_id
+GROUP BY
+    player_name,
+    ps_season_id;
+
+-- 16. Show player with the most mvp
+SELECT
+    player_name as player,
+    COUNT(season_id) as mvp
+FROM
+    player,
+    season
+WHERE
+    player_id = season_mvp
+GROUP BY
+    player_name
+ORDER BY
+    mvp DESC;
+
+-- 17. Show player with the most rookie
+SELECT
+    player_name as player,
+    COUNT(season_id) as rookie
+FROM
+    player,
+    season
+WHERE
+    player_id = season_rookie
+GROUP BY
+    player_name
+ORDER BY
+    rookie DESC;
+
+-- 18. Show player as point leader
+SELECT
+    player_name as player,
+    COUNT(season_id) as point
+FROM
+    player,
+    season
+WHERE
+    player_id = season_point
+GROUP BY
+    player_name
+ORDER BY
+    point DESC;
+
+-- 19. Which game did the home team won
+SELECT
+    game_id as game,
+    game_home_pts as pts
+FROM
+    game
+WHERE
+    game_home_pts > game_away_pts
+GROUP BY
+    game_id
+ORDER BY
+    pts DESC;
+-- 20. Show player with a quad-double
+SELECT
+    player_name as player,
+    ps_season_id as season
+FROM
+    player,
+    player_stats
+WHERE
+    player_id = ps_player_id
+    AND
+    ps_pts >= 10
+    AND
+    ps_ast >= 10
+    AND
+    ps_trb >= 10
+    AND
+    (ps_stl >= 10 OR ps_blk >= 10)
+GROUP BY
+    player_name,
+    ps_season_id;
