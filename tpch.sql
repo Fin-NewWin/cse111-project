@@ -1,3 +1,5 @@
+.headers on
+
 CREATE TABLE player (
 	player_id INTEGER,
 	player_name TEXT,
@@ -38,6 +40,79 @@ CREATE TABLE player_stats (
     ps_pts DECIMAL
 );
 
+CREATE TABLE state (
+    state_id INTEGER,
+    state_name TEXT
+);
+
+CREATE TABLE team (
+    team_id INTEGER,
+    team_name TEXT,
+    team_mascot TEXT,
+    team_state_id INTEGER,
+    team_division TEXT
+);
+
+CREATE TABLE team_season (
+    ts_season_id INTEGER,
+    ts_team_id INTEGER,
+    ts_wins INTEGER,
+    ts_losses INTEGER,
+    ts_wl DECIMAL,
+    ts_finish TEXT,
+    ts_srs DECIMAL,
+    ts_pace DECIMAL,
+    ts_rpace DECIMAL,
+    ts_ortg DECIMAL,
+    ts_rortg DECIMAL,
+    ts_drtg DECIMAL,
+    ts_rdrtg DECIMAL
+);
+
+CREATE TABLE season (
+    season_id INTEGER,
+    season_team_id INTEGER,
+    season_mvp INTEGER,
+    season_rookie INTEGER,
+    season_point INTEGER,
+    season_rbs INTEGER,
+    season_ast INTEGER,
+    season_wins INTEGER
+);
+
+CREATE TABLE game (
+    game_id INTEGER,
+    game_season_id INTEGER,
+    game_home_team_id INTEGER,
+    game_home_pts INTEGER,
+    game_away_team_id INTEGER,
+    game_away_pts INTEGER
+);
+
+
 
 .import data/player.db player
+.import data/season.db season
 .import data/player_stats.db player_stats
+.import data/state.db state
+.import data/team.db team
+.import data/team_season.db team_season
+.import data/game.db game
+
+-- SELECT * FROM player;
+
+-- INSERT INTO player(player_id, player_name, player_position, player_height, player_weight, player_draft)
+-- VALUES (870, 'Stephen Curry', 'Point Guard', 188, 83, 2009);
+
+-- SELECT * FROM player;
+
+-- UPDATE player
+-- SET player_weight = 77
+-- WHERE player_id = 870;
+
+-- SELECT * FROM player;
+
+-- DELETE FROM  player
+-- WHERE player_id = 870;
+
+-- SELECT * FROM player;
