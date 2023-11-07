@@ -1,3 +1,5 @@
+.headers on
+
 CREATE TABLE player (
 	player_id INTEGER,
 	player_name TEXT,
@@ -96,3 +98,21 @@ CREATE TABLE game (
 .import data/team.db team
 .import data/team_season.db team_season
 .import data/game.db game
+
+-- SELECT * FROM player;
+
+-- INSERT INTO player(player_id, player_name, player_position, player_height, player_weight, player_draft)
+-- VALUES (870, 'Stephen Curry', 'Point Guard', 188, 83, 2009);
+
+-- SELECT * FROM player;
+
+-- UPDATE player
+-- SET player_weight = 77
+-- WHERE player_id = 870;
+
+-- SELECT * FROM player;
+
+-- DELETE FROM  player
+-- WHERE player_id = 870;
+
+-- SELECT * FROM player;
