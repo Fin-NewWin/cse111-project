@@ -1,4 +1,3 @@
-
 -- 1. Show all state with a count of teams
 SELECT 
     state_name as state, 
@@ -286,3 +285,31 @@ WHERE
 GROUP BY
     player_name,
     ps_season_id;
+
+
+SELECT
+    *
+FROM
+    player,
+    player_stats,
+    season
+WHERE
+    season_id = ps_season_id
+    AND
+    ps_player_id = player_id;
+
+SELECT
+    *
+FROM
+    player;
+
+SELECT
+    *
+FROM
+    team,
+    team_season,
+    season
+WHERE
+    team_id = ts_team_id
+    AND
+    ts_season_id = season_id;
