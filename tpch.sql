@@ -50,7 +50,8 @@ CREATE TABLE team (
     team_name TEXT,
     team_mascot TEXT,
     team_state_id INTEGER,
-    team_division TEXT
+    team_division TEXT,
+	team_coach_id INTEGER
 );
 
 CREATE TABLE team_season (
@@ -89,6 +90,11 @@ CREATE TABLE game (
     game_away_pts INTEGER
 );
 
+CREATE TABLE coach (
+	coach_id INTEGER,
+	coach_name TEXT
+);
+
 
 
 .import data/player.db player
@@ -98,6 +104,7 @@ CREATE TABLE game (
 .import data/team.db team
 .import data/team_season.db team_season
 .import data/game.db game
+.import data/coach.db coach
 
 -- SELECT * FROM player;
 
