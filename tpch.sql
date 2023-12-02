@@ -1,12 +1,13 @@
 .headers on
 
 CREATE TABLE player (
-	player_id INTEGER,
+    player_id INTEGER,
 	player_name TEXT,
 	player_position TEXT,
 	player_height DECIMAL,
 	player_weight DECIMAL,
-    player_draft TEXT
+    player_draft TEXT,
+    player_team_id INTEGER
 );
 
 CREATE TABLE player_stats (
@@ -50,6 +51,7 @@ CREATE TABLE team (
     team_name TEXT,
     team_mascot TEXT,
     team_state_id INTEGER,
+    team_conference TEXT,
     team_division TEXT,
 	team_coach_id INTEGER
 );
