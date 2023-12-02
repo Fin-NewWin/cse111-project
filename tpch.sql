@@ -65,11 +65,8 @@ CREATE TABLE team_season (
     ts_finish TEXT,
     ts_srs DECIMAL,
     ts_pace DECIMAL,
-    ts_rpace DECIMAL,
     ts_ortg DECIMAL,
-    ts_rortg DECIMAL,
     ts_drtg DECIMAL,
-    ts_rdrtg DECIMAL
 );
 
 CREATE TABLE season (
