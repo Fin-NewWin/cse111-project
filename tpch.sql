@@ -86,7 +86,8 @@ CREATE TABLE game (
     game_away_team_id INTEGER,
     game_away_pts INTEGER,
     game_home_team_id INTEGER,
-    game_home_pts INTEGER
+    game_home_pts INTEGER,
+    game_type TEXT
 );
 
 CREATE TABLE coach (
