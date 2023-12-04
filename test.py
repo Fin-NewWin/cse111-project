@@ -1,6 +1,18 @@
 import sqlite3
 
 
+def checkTable(cur, table: str):
+    sql = f"""
+        SELECT name FROM sqlite_master WHERE type='table' AND name='{table}'
+    """
+    cur.execute(sql)
+    rows = cur.fetchall()
+    if len(rows) == 0:
+        return False
+    else:
+        return True
+
+
 def testTable(cur, table: str):
     sql = f"""
         SELECT * FROM {table}
@@ -12,16 +24,16 @@ def testTable(cur, table: str):
         print(row)
 
 
-def insertData(cur, table: str, lines: list):
+def insertData(cur, table: str):
+    f = open(f"data/{table}.db", "r")
+    lines = f.readlines()
+
     n = len(lines[0].strip().split("|"))
     s = (n * "?,")[:-1]
-    # s = s[:-1]
 
     for line in lines:
         line = line.strip().split("|")
-
         sql = f"INSERT INTO {table} VALUES({s})"
-
         cur.execute(sql, (list(line)))
 
 
@@ -138,16 +150,17 @@ def createTables(conn):
 
     for table in sqls:
         cur.execute(sqls[table])
-        f = open(f"data/{table}.db", "r")
-        lines = f.readlines()
-        insertData(cur, table, lines)
+
+        if not checkTable(cur, table):
+            insertData(cur, table)
         testTable(cur, table)
+
+    conn.commit()
 
 
 def main():
     conn = sqlite3.connect(r"tpch.sqlite")
     createTables(conn)
-
     conn.close()
 
 
