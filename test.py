@@ -11,9 +11,8 @@ def check_tab_exist(cur, table: str):
 
 
 def check_tab_update(cur, table: str):
-    sql = f"""
-        SELECT * FROM {table}
-    """
+    sql = f"SELECT * FROM {table}"
+
     cur.execute(sql)
     rows = cur.fetchall()
 
@@ -36,19 +35,6 @@ def create_table(cur, table: str, table_attr):
     sql = f"DROP TABLE IF EXISTS {table}"
     cur.execute(sql)
     cur.execute(table_attr)
-
-
-def insert_data(cur, table: str):
-    f = open(f"data/{table}.db", "r")
-    lines = f.readlines()
-
-    n = len(lines[0].strip().split("|"))
-    s = (n * "?,")[:-1]
-
-    for line in lines:
-        line = line.strip().split("|")
-        sql = f"INSERT INTO {table} VALUES({s})"
-        cur.execute(sql, (list(line)))
 
 
 def create_tab(conn):
@@ -166,7 +152,7 @@ def create_tab(conn):
         # check if table doesn't exist or update
         if not check_tab_exist(cur, table) or not check_tab_update(cur, table):
             create_table(cur, table, sqls[table])
-            insert_data(cur, table)
+            conn.executescript(f"import data/{table}.db {table}")
         test_table(cur, table)
 
     conn.commit()
