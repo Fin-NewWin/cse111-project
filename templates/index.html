@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basketball Stats</title>
+</head>
+<body>
+    <h1>Basketball Players Basic Information</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Player ID</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Height (cm)</th>
+                <th>Weight (kg)</th>
+                <th>Draft</th>
+                <th>Team ID</th>
+            </tr>
+        </thead>
+        <tbody id="playerTableBody">
+            {% for row in data %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>
+                        <a href="#" onclick="showPlayerStats({{ row[0] }})">{{ row[1] }}</a>
+                    </td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                    <td>{{ row[5] }}</td>
+                    <td>{{ row[6] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
