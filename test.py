@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def checkTable(cur, table: str):
+def check_tab_exist(cur, table: str):
     sql = f"""
         SELECT name FROM sqlite_master WHERE type='table' AND name='{table}'
     """
@@ -10,7 +10,7 @@ def checkTable(cur, table: str):
     return len(rows) != 0
 
 
-def testTable(cur, table: str):
+def test_table(cur, table: str):
     sql = f"""
         SELECT * FROM {table}
     """
@@ -21,7 +21,7 @@ def testTable(cur, table: str):
         print(row)
 
 
-def insertData(cur, table: str):
+def insert_data(cur, table: str):
     f = open(f"data/{table}.db", "r")
     lines = f.readlines()
 
@@ -34,7 +34,7 @@ def insertData(cur, table: str):
         cur.execute(sql, (list(line)))
 
 
-def createTables(conn):
+def create_tab(conn):
     """
     Create tables in the database and store in file tpch.sqlite
     """
@@ -148,16 +148,16 @@ def createTables(conn):
     for table in sqls:
         cur.execute(sqls[table])
 
-        if not checkTable(cur, table):
-            insertData(cur, table)
-        testTable(cur, table)
+        if not check_tab_exist(cur, table):
+            insert_data(cur, table)
+        test_table(cur, table)
 
     conn.commit()
 
 
 def main():
     conn = sqlite3.connect(r"tpch.sqlite")
-    createTables(conn)
+    create_tab(conn)
     conn.close()
 
 
