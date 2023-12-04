@@ -7,7 +7,7 @@ def checkTable(cur, table: str):
     """
     cur.execute(sql)
     rows = cur.fetchall()
-    return len(rows) == 0
+    return len(rows) != 0
 
 
 def testTable(cur, table: str):
