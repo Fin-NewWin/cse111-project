@@ -2,10 +2,10 @@
 
 CREATE TABLE player (
     player_id INTEGER,
-	player_name TEXT,
-	player_position TEXT,
-	player_height DECIMAL,
-	player_weight DECIMAL,
+    player_name TEXT,
+    player_position TEXT,
+    player_height DECIMAL,
+    player_weight DECIMAL,
     player_draft TEXT,
     player_team_id INTEGER
 );
@@ -53,7 +53,7 @@ CREATE TABLE team (
     team_state_id INTEGER,
     team_conference TEXT,
     team_division TEXT,
-	team_coach_id INTEGER
+    team_coach_id INTEGER
 );
 
 CREATE TABLE team_season (
@@ -71,8 +71,8 @@ CREATE TABLE team_season (
 
 CREATE TABLE season (
     season_id INTEGER,
-    season_team_id INTEGER,
     season_mvp INTEGER,
+    season_team_id INTEGER,
     season_rookie INTEGER,
     season_point INTEGER,
     season_rbs INTEGER,
@@ -91,10 +91,9 @@ CREATE TABLE game (
 );
 
 CREATE TABLE coach (
-	coach_id INTEGER,
-	coach_name TEXT
+    coach_id INTEGER,
+    coach_name TEXT
 );
-
 
 
 .import data/player.db player
