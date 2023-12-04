@@ -41,6 +41,19 @@ def import_data(cur: sqlite3.Cursor, table: str):
     cur.executescript(f"import ./data/{table}.db {table}")
 
 
+def insert_data(cur, table: str):
+    f = open(f"data/{table}.db", "r")
+    lines = f.readlines()
+
+    n = len(lines[0].strip().split("|"))
+    s = (n * "?,")[:-1]
+
+    for line in lines:
+        line = line.strip().split("|")
+        sql = f"INSERT INTO {table} VALUES({s})"
+        cur.execute(sql, (list(line)))
+
+
 def create_tab(conn: sqlite3.Connection):
     """
     Create tables in the database and store in file tpch.sqlite
@@ -156,7 +169,8 @@ def create_tab(conn: sqlite3.Connection):
         # check if table doesn't exist or update
         if not check_tab_exist(cur, table) or not check_tab_update(cur, table):
             create_table(cur, table, sqls[table])
-            import_data(cur, table)
+            # import_data(cur, table)
+            insert_data(cur, table)
         test_table(cur, table)
 
     conn.commit()
