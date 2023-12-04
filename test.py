@@ -10,15 +10,32 @@ def check_tab_exist(cur, table: str):
     return len(rows) != 0
 
 
-def test_table(cur, table: str):
+def check_tab_update(cur, table: str):
     sql = f"""
         SELECT * FROM {table}
     """
     cur.execute(sql)
     rows = cur.fetchall()
 
+    f = open(f"data/{table}.db", "r")
+    lines = f.readlines()
+
+    return len(rows) == len(lines)
+
+
+def test_table(cur, table: str):
+    sql = f"SELECT * FROM {table}"
+    cur.execute(sql)
+    rows = cur.fetchall()
+
     for row in rows:
         print(row)
+
+
+def create_table(cur, table: str, table_attr):
+    sql = f"DROP TABLE IF EXISTS {table}"
+    cur.execute(sql)
+    cur.execute(table_attr)
 
 
 def insert_data(cur, table: str):
@@ -146,9 +163,9 @@ def create_tab(conn):
     }
 
     for table in sqls:
-        cur.execute(sqls[table])
-
-        if not check_tab_exist(cur, table):
+        # check if table doesn't exist or update
+        if not check_tab_exist(cur, table) or not check_tab_update(cur, table):
+            create_table(cur, table, sqls[table])
             insert_data(cur, table)
         test_table(cur, table)
 
