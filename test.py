@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def check_tab_exist(cur, table: str):
+def check_tab_exist(cur: sqlite3.Cursor, table: str):
     sql = f"""
         SELECT name FROM sqlite_master WHERE type='table' AND name='{table}'
     """
@@ -10,7 +10,7 @@ def check_tab_exist(cur, table: str):
     return len(rows) != 0
 
 
-def check_tab_update(cur, table: str):
+def check_tab_update(cur: sqlite3.Cursor, table: str):
     sql = f"SELECT * FROM {table}"
 
     cur.execute(sql)
@@ -22,7 +22,7 @@ def check_tab_update(cur, table: str):
     return len(rows) == len(lines)
 
 
-def test_table(cur, table: str):
+def test_table(cur: sqlite3.Cursor, table: str):
     sql = f"SELECT * FROM {table}"
     cur.execute(sql)
     rows = cur.fetchall()
@@ -31,17 +31,17 @@ def test_table(cur, table: str):
         print(row)
 
 
-def create_table(cur, table: str, table_attr):
+def create_table(cur: sqlite3.Cursor, table: str, table_attr: str):
     sql = f"DROP TABLE IF EXISTS {table}"
     cur.execute(sql)
     cur.execute(table_attr)
 
 
-def import_data(cur, table: str):
+def import_data(cur: sqlite3.Cursor, table: str):
     cur.executescript(f"import data/{table}.db {table}")
 
 
-def create_tab(conn):
+def create_tab(conn: sqlite3.Connection):
     """
     Create tables in the database and store in file tpch.sqlite
     """
