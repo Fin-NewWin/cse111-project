@@ -16,7 +16,7 @@ def check_tab_update(cur: sqlite3.Cursor, table: str):
     cur.execute(sql)
     rows = cur.fetchall()
 
-    f = open(f"data/{table}.db", "r")
+    f = open(f"./data/{table}.db", "r")
     lines = f.readlines()
 
     return len(rows) == len(lines)
@@ -38,7 +38,7 @@ def create_table(cur: sqlite3.Cursor, table: str, table_attr: str):
 
 
 def import_data(cur: sqlite3.Cursor, table: str):
-    cur.executescript(f"import data/{table}.db {table}")
+    cur.executescript(f"import ./data/{table}.db {table}")
 
 
 def create_tab(conn: sqlite3.Connection):
