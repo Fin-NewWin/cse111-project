@@ -37,6 +37,10 @@ def create_table(cur, table: str, table_attr):
     cur.execute(table_attr)
 
 
+def import_data(cur, table: str):
+    cur.executescript(f"import data/{table}.db {table}")
+
+
 def create_tab(conn):
     """
     Create tables in the database and store in file tpch.sqlite
@@ -152,7 +156,7 @@ def create_tab(conn):
         # check if table doesn't exist or update
         if not check_tab_exist(cur, table) or not check_tab_update(cur, table):
             create_table(cur, table, sqls[table])
-            conn.executescript(f"import data/{table}.db {table}")
+            import_data(cur, table)
         test_table(cur, table)
 
     conn.commit()
