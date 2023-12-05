@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -179,6 +179,26 @@ def create_tab(conn: sqlite3.Connection):
     conn.commit()
 
 
+def execute_query(sql, values=None, fetchone=False):
+    conn = sqlite3.connect("tpch.sqlite")
+    cur = conn.cursor()
+
+    if values:
+        cur.execute(sql, values)
+    else:
+        cur.execute(sql)
+
+    if fetchone:
+        result = cur.fetchone()
+    else:
+        result = cur.fetchall()
+
+    conn.commit()
+    conn.close()
+
+    return result
+
+
 def main():
     conn = sqlite3.connect(r"tpch.sqlite")
     create_tab(conn)
@@ -198,8 +218,10 @@ def index():
     """
     )
     data = cur.fetchall()
+    cur.execute("SELECT team_id, team_name FROM team")
+    teams = cur.fetchall()
     conn.close()
-    return render_template("index.html", data=data)
+    return render_template("index.html", data=data, teams=teams)
 
 
 @app.route("/player_sort/<category>/<int:sort>")
@@ -418,6 +440,28 @@ def season_accolades(season_id):
     return render_template(
         "season_accolades.html", season_accolades_data=season_accolades_data
     )
+
+
+@app.route("/add_player", methods=["GET", "POST"])
+def add_player_route():
+    if request.method == "POST":
+        player_name = request.form.get("playerName")
+        player_position = request.form.get("playerPosition")
+        player_height = request.form.get("playerHeight")
+        player_weight = request.form.get("playerWeight")
+        player_draft = request.form.get("playerDraft")
+        team_id = request.form.get("teamId")
+
+        # Insert player data into the 'player' table
+        sql = "INSERT INTO player (player_name, player_position, player_height, player_weight, player_draft, player_team_id) VALUES (?, ?, ?, ?, ?, ?)"
+        values = (player_name, player_position, player_height, player_weight, player_draft, team_id)
+        execute_query(sql, values)
+
+        # Redirect to the index
+        return redirect(url_for("index"))
+
+    # Render the form with the team dropdown options
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
