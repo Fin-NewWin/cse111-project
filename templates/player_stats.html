@@ -1,82 +1,466 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/b04e1d3d2b.js"
+      crossorigin="anonymous"
+    ></script>
     <title>{{ player_name }} - Player Stats</title>
-
-</head>
-<body>
+  </head>
+  <body>
     <h1>{{ player_name }} Stats</h1>
 
     <!-- Player Stats Table -->
     <table border="1">
-        <thead>
-            <tr>
-                <th>Season</th>
-                <th>Team</th>
-                <th>Games</th>
-                <th>Games Started</th>
-                <th>Minutes Per Game</th>
-                <th>Field Goals Made</th>
-                <th>Field Goals Attempted</th>
-                <th>Field Goal Percentage</th>
-                <th>3-Pointers Made</th>
-                <th>3-Pointers Attempted</th>
-                <th>3-Point Percentage</th>
-                <th>2-Pointers Made</th>
-                <th>2-Pointers Attempted</th>
-                <th>2-Point Percentage</th>
-                <th>Effective Field Goal Percentage</th>
-                <th>Free Throws Made</th>
-                <th>Free Throws Attempted</th>
-                <th>Free Throw Percentage</th>
-                <th>Offensive Rebounds</th>
-                <th>Defensive Rebounds</th>
-                <th>Total Rebounds</th>
-                <th>Assists</th>
-                <th>Steals</th>
-                <th>Blocks</th>
-                <th>Turnovers</th>
-                <th>Personal Fouls</th>
-                <th>Points</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for stats_row in player_stats_data %}
-                <tr>
-                    <td><a href="{{ url_for('season_accolades', season_id=stats_row[1]) }}">{{ stats_row[1] }}</a></td>
-                    <td>
-                        <a href="{{ url_for('team_info', team_id=stats_row[0]) }}">{{ stats_row[-1] }}</a>
-                    </td>
-                    <td>{{ stats_row[3] }}</td>
-                    <td>{{ stats_row[4] }}</td>
-                    <td>{{ stats_row[5] }}</td>
-                    <td>{{ stats_row[6] }}</td>
-                    <td>{{ stats_row[7] }}</td>
-                    <td>{{ stats_row[8] }}</td>
-                    <td>{{ stats_row[9] }}</td>
-                    <td>{{ stats_row[10] }}</td>
-                    <td>{{ stats_row[11] }}</td>
-                    <td>{{ stats_row[12] }}</td>
-                    <td>{{ stats_row[13] }}</td>
-                    <td>{{ stats_row[14] }}</td>
-                    <td>{{ stats_row[15] }}</td>
-                    <td>{{ stats_row[16] }}</td>
-                    <td>{{ stats_row[17] }}</td>
-                    <td>{{ stats_row[18] }}</td>
-                    <td>{{ stats_row[19] }}</td>
-                    <td>{{ stats_row[20] }}</td>
-                    <td>{{ stats_row[21] }}</td>
-                    <td>{{ stats_row[22] }}</td>
-                    <td>{{ stats_row[23] }}</td>
-                    <td>{{ stats_row[24] }}</td>
-                    <td>{{ stats_row[25] }}</td>
-                    <td>{{ stats_row[26] }}</td>
-                    <td>{{ stats_row[27] }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+      <thead>
+        <tr>
+          <th>
+            Season {% if sign == 1 or cat != 'ps_season_id' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_season_id', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_season_id', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Team {% if sign == 1 or cat != 'ps_team_id' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_team_id', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_team_id', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Games {% if sign == 1 or cat != 'ps_g' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_g', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_g', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Games Started {% if sign == 1 or cat != 'ps_gs' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_gs', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_gs', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Minutes Per Game {% if sign == 1 or cat != 'ps_mp' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_mp', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_mp', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Field Goals Made {% if sign == 1 or cat != 'ps_fg' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_fg', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_fg', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Field Goals Attempted {% if sign == 1 or cat != 'ps_fga' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_fga', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_fga', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Field Goal Percentage {% if sign == 1 or cat != 'ps_fgp' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_fgp', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_fgp', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            3-Pointers Made {% if sign == 1 or cat != 'ps_3p' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_3p', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_3p', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            3-Pointers Attempted {% if sign == 1 or cat != 'ps_3pa' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_3pa', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_3pa', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            3-Point Percentage {% if sign == 1 or cat != 'ps_3pp' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_3pp', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_3pp', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            2-Pointers Made {% if sign == 1 or cat != 'ps_2p' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_2p', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_2p', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            2-Pointers Attempted {% if sign == 1 or cat != 'ps_2pa' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_2pa', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_2pa', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            2-Point Percentage {% if sign == 1 or cat != 'ps_2pp' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_2pp', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_2pp', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Effective Field Goal Percentage {% if sign == 1 or cat != 'ps_efg'
+            %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_efg', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_efg', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Free Throws Made {% if sign == 1 or cat != 'ps_ft' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_ft', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_ft', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Free Throws Attempted {% if sign == 1 or cat != 'ps_fta' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_fta', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_fta', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Free Throw Percentage {% if sign == 1 or cat != 'ps_ftp' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_ftp', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_ftp', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Offensive Rebounds {% if sign == 1 or cat != 'ps_orb' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_orb', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_orb', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Defensive Rebounds {% if sign == 1 or cat != 'ps_drb' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_drb', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_drb', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Total Rebounds {% if sign == 1 or cat != 'ps_trb' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_trb', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_trb', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Assists {% if sign == 1 or cat != 'ps_ast' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_ast', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_ast', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Steals {% if sign == 1 or cat != 'ps_stl' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_stl', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_stl', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Blocks {% if sign == 1 or cat != 'ps_blk' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_blk', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_blk', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Turnovers {% if sign == 1 or cat != 'ps_tov' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_tov', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_tov', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Personal Fouls {% if sign == 1 or cat != 'ps_pf' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_pf', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_pf', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+          <th>
+            Points {% if sign == 1 or cat != 'ps_pts' %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_pts', sort=0) }}"
+            >
+              <i class="fas fa-sort"></i>
+            </a>
+            {% else %}
+            <a
+              href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_pts', sort=1) }}"
+            >
+              <i class="fas fa-sort-down"></i>
+            </a>
+            {% endif %}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stats_row in player_stats_data %}
+        <tr>
+          <td>{{ stats_row[1] }}</td>
+          <td>
+            <a href="{{ url_for('team_info', team_id=stats_row[0]) }}"
+              >{{ stats_row[-1] }}</a
+            >
+          </td>
+          <td>{{ stats_row[3] }}</td>
+          <td>{{ stats_row[4] }}</td>
+          <td>{{ stats_row[5] }}</td>
+          <td>{{ stats_row[6] }}</td>
+          <td>{{ stats_row[7] }}</td>
+          <td>{{ stats_row[8] }}</td>
+          <td>{{ stats_row[9] }}</td>
+          <td>{{ stats_row[10] }}</td>
+          <td>{{ stats_row[11] }}</td>
+          <td>{{ stats_row[12] }}</td>
+          <td>{{ stats_row[13] }}</td>
+          <td>{{ stats_row[14] }}</td>
+          <td>{{ stats_row[15] }}</td>
+          <td>{{ stats_row[16] }}</td>
+          <td>{{ stats_row[17] }}</td>
+          <td>{{ stats_row[18] }}</td>
+          <td>{{ stats_row[19] }}</td>
+          <td>{{ stats_row[20] }}</td>
+          <td>{{ stats_row[21] }}</td>
+          <td>{{ stats_row[22] }}</td>
+          <td>{{ stats_row[23] }}</td>
+          <td>{{ stats_row[24] }}</td>
+          <td>{{ stats_row[25] }}</td>
+          <td>{{ stats_row[26] }}</td>
+          <td>{{ stats_row[27] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
-</body>
+  </body>
 </html>
