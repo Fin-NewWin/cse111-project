@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ team_info_data[1] }} - Team Information</title>
+    <!-- Add your styles here -->
+</head>
+<body>
+    <h1>{{ team_info_data[1] }} - Team Information</h1>
+
+    <!-- Basic Team Information -->
+    <h2>Basic Information</h2>
+    <p>Mascot: {{ team_info_data[2] }}</p>
+    <p>State: {{ team_info_data[-1] }}</p>
+    <p>Conference: {{ team_info_data[4] }}</p>
+    <p>Division: {{ team_info_data[5] }}</p>
+    <p>Coach: {{ team_info_data[-2] }}</p>
+
+    <!-- Team Season Information -->
+    <h2>Season Information</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Season</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Win-Loss Percentage</th>
+                <th>Placement</th>
+                <th>Simple Rating System (SRS)</th>
+                <th>Pace</th>
+                <th>Offensive Rating (ORTG)</th>
+                <th>Defensive Rating (DRTG)</th>
+            </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through team season data -->
+        {% for season_row in team_season_data %}
+            <tr>
+                <td><a href="{{ url_for('season_accolades', season_id=season_row[0]) }}">{{ season_row[0] }}</a></td>
+                <td>{{ season_row[2] }}</td>
+                <td>{{ season_row[3] }}</td>
+                <td>{{ season_row[4] }}</td>
+                <td>{{ season_row[5] }}</td>
+                <td>{{ season_row[6] }}</td>
+                <td>{{ season_row[7] }}</td>
+                <td>{{ season_row[8] }}</td>
+                <td>{{ season_row[9] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+<p><a href="{{ url_for('index') }}">Back to Players</a></p>
+</html>
