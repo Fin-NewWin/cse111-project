@@ -7,6 +7,8 @@
 </head>
 <body>
     <h1>Basketball Players Basic Information</h1>
+
+    <!-- Players Table -->
     <table border="1">
         <thead>
             <tr>
@@ -24,22 +26,22 @@
                 <tr>
                     <td>{{ row[0] }}</td>
                     <td>
-                        <a href="#" onclick="showPlayerStats({{ row[0] }})">{{ row[1] }}</a>
-                    </td>
+                        <a href="{{ url_for('player_stats', player_id=row[0], player_name=row[1]) }}">{{ row[1] }}</a>
+                    </td>                    
                     <td>{{ row[2] }}</td>
                     <td>{{ row[3] }}</td>
                     <td>{{ row[4] }}</td>
                     <td>{{ row[5] }}</td>
                     <td>
                         {% if row[6] not in ['Retired', 'Free Agency'] %}
-                            <a href="#" onclick="showTeamInformation({{ row[0] }})">{{ row[6] }}</a>
+                            <a href="{{ url_for('team_season', team_id=row[0], team_name=row[1]) }}">{{ row[6] }}</a>
                         {% else %}
                             {{ row[6] }}
-                        {% endif %}   <!--once team information is shown, show coach in place of its ID-->
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table>    
 </body>
 </html>
