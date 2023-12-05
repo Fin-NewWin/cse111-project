@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/b04e1d3d2b.js"
+      crossorigin="anonymous"
+    ></script>
     <title>{{ player_name }} - Player Stats</title>
   </head>
   <body>
@@ -13,7 +17,7 @@
       <thead>
         <tr>
           <th>
-            Season {% if sign == 1 or cat != 'ps_season_id' %}
+            Season shit {% if sign == 1 or cat != 'ps_season_id' %}
             <a
               href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_season_id', sort=0) }}"
             >
@@ -423,7 +427,11 @@
       <tbody>
         {% for stats_row in player_stats_data %}
         <tr>
-          <td><a href="{{ url_for('season_accolades', season_id=stats_row[1]) }}">{{ stats_row[1] }}</a></td>
+          <td>
+            <a href="{{ url_for('season_accolades', season_id=stats_row[1]) }}"
+              >{{ stats_row[1] }}</a
+            >
+          </td>
           <td>
             <a href="{{ url_for('team_info', team_id=stats_row[2]) }}"
               >{{ stats_row[-1] }}</a
