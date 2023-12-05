@@ -22,30 +22,22 @@
         <tr>
           <th>
             Player ID {% if sign == 1 or cat != 'player_id' %}
-            <a
-              href="{{ url_for('player_sort', category='player_id', sort=0) }}"
-            >
+            <a href="{{ url_for('player', category='player_id', sort=0) }}">
               <i class="fas fa-sort"></i>
             </a>
             {% else %}
-            <a
-              href="{{ url_for('player_sort', category='player_id', sort=1) }}"
-            >
+            <a href="{{ url_for('player', category='player_id', sort=1) }}">
               <i class="fas fa-sort-down"></i>
             </a>
             {% endif %}
           </th>
           <th>
             Name {% if sign == 1 or cat != 'player_name' %}
-            <a
-              href="{{ url_for('player_sort', category='player_name', sort=0) }}"
-            >
+            <a href="{{ url_for('player', category='player_name', sort=0) }}">
               <i class="fas fa-sort"></i>
             </a>
             {% else %}
-            <a
-              href="{{ url_for('player_sort', category='player_name', sort=1) }}"
-            >
+            <a href="{{ url_for('player', category='player_name', sort=1) }}">
               <i class="fas fa-sort-down"></i>
             </a>
             {% endif %}
@@ -53,13 +45,13 @@
           <th>
             Position {% if sign == 1 or cat != 'player_position' %}
             <a
-              href="{{ url_for('player_sort', category='player_position', sort=0) }}"
+              href="{{ url_for('player', category='player_position', sort=0) }}"
             >
               <i class="fas fa-sort"></i>
             </a>
             {% else %}
             <a
-              href="{{ url_for('player_sort', category='player_position', sort=1) }}"
+              href="{{ url_for('player', category='player_position', sort=1) }}"
             >
               <i class="fas fa-sort-down"></i>
             </a>
@@ -67,60 +59,44 @@
           </th>
           <th>
             Height (cm) {% if sign == 1 or cat != 'player_height' %}
-            <a
-              href="{{ url_for('player_sort', category='player_height', sort=0) }}"
-            >
+            <a href="{{ url_for('player', category='player_height', sort=0) }}">
               <i class="fas fa-sort"></i>
             </a>
             {% else %}
-            <a
-              href="{{ url_for('player_sort', category='player_height', sort=1) }}"
-            >
+            <a href="{{ url_for('player', category='player_height', sort=1) }}">
               <i class="fas fa-sort-down"></i>
             </a>
             {% endif %}
           </th>
           <th>
             Weight (kg) {% if sign == 1 or cat != 'player_weight' %}
-            <a
-              href="{{ url_for('player_sort', category='player_weight', sort=0) }}"
-            >
+            <a href="{{ url_for('player', category='player_weight', sort=0) }}">
               <i class="fas fa-sort"></i>
             </a>
             {% else %}
-            <a
-              href="{{ url_for('player_sort', category='player_weight', sort=1) }}"
-            >
+            <a href="{{ url_for('player', category='player_weight', sort=1) }}">
               <i class="fas fa-sort-down"></i>
             </a>
             {% endif %}
           </th>
           <th>
             Draft {% if sign == 1 or cat != 'player_draft' %}
-            <a
-              href="{{ url_for('player_sort', category='player_draft', sort=0) }}"
-            >
+            <a href="{{ url_for('player', category='player_draft', sort=0) }}">
               <i class="fas fa-sort"></i>
             </a>
             {% else %}
-            <a
-              href="{{ url_for('player_sort', category='player_draft', sort=1) }}"
-            >
+            <a href="{{ url_for('player', category='player_draft', sort=1) }}">
               <i class="fas fa-sort-down"></i>
             </a>
             {% endif %}
           </th>
           <th>
             Team {% if sign == 1 or cat != 'team_name' %}
-            <a
-              href="{{ url_for('player_sort', category='team_name', sort=0) }}"
-            >
+            <a href="{{ url_for('player', category='team_name', sort=0) }}">
               <i class="fas fa-sort"></i>
             </a>
             {% else %}
-            <a
-              href="{{ url_for('player_sort', category='team_name', sort=1) }}"
-            >
+            <a href="{{ url_for('player', category='team_name', sort=1) }}">
               <i class="fas fa-sort-down"></i>
             </a>
             {% endif %}

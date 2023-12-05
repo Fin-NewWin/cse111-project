@@ -3,10 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://kit.fontawesome.com/b04e1d3d2b.js"
-      crossorigin="anonymous"
-    ></script>
     <title>{{ player_name }} - Player Stats</title>
   </head>
   <body>
@@ -462,5 +458,6 @@
         {% endfor %}
       </tbody>
     </table>
+    <p><a href="{{ url_for('index') }}">Back to Players</a></p>
   </body>
 </html>
