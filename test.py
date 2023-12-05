@@ -247,11 +247,11 @@ def team_info(team_id):
 
     # Fetch basic team information with coach name
     cur.execute("""
-        SELECT team.*, coach.coach_name, state.state_name
-        FROM team
-        JOIN coach ON team.team_coach = coach.coach_id
-        JOIN state ON team.team_state_id = state.state_id
-        WHERE team_id = ?
+        SELECT *, coach_name, state_name
+        FROM team, coach, state 
+        WHERE team.team_coach = coach_id
+            AND team_state_id = state_id
+            AND team_id = ?
     """, (team_id,))
     team_info_data = cur.fetchone()
 
