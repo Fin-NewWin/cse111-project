@@ -11,7 +11,6 @@
 
     <!-- Basic Team Information -->
     <h2>Basic Information</h2>
-    <p>Team Name: {{ team_info_data[1] }}</p>
     <p>Mascot: {{ team_info_data[2] }}</p>
     <p>State: {{ team_info_data[-1] }}</p>
     <p>Conference: {{ team_info_data[4] }}</p>
@@ -38,7 +37,7 @@
         <!-- Loop through team season data -->
         {% for season_row in team_season_data %}
             <tr>
-                <td>{{ season_row[0] }}</td>
+                <td><a href="{{ url_for('season_accolades', season_id=season_row[0]) }}">{{ season_row[0] }}</a></td>
                 <td>{{ season_row[2] }}</td>
                 <td>{{ season_row[3] }}</td>
                 <td>{{ season_row[4] }}</td>
@@ -51,8 +50,6 @@
         {% endfor %}
     </tbody>
 </table>
-
-    <!-- Add your HTML structure for additional team information -->
-
 </body>
+<p><a href="{{ url_for('index') }}">Back to Players</a></p>
 </html>
