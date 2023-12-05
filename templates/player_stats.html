@@ -17,7 +17,7 @@
       <thead>
         <tr>
           <th>
-            Season shit {% if sign == 1 or cat != 'ps_season_id' %}
+            Season {% if sign == 1 or cat != 'ps_season_id' %}
             <a
               href="{{ url_for('player_stats_sort', player_id=player_id, player_name=player_name, category='ps_season_id', sort=0) }}"
             >
