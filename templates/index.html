@@ -15,7 +15,38 @@
     />
   </head>
   <body>
-    <h1>Basketball Players Basic Information</h1>
+    <h1>Basketball Players - Basic Information</h1>
+
+    <!-- Input fields for player information -->
+  <form method="POST" action="{{ url_for('add_player_route') }}">
+    <label for="playerName">Player Name:</label>
+    <input type="text" id="playerName" name="playerName" required>
+
+    <label for="playerPosition">Position(s):</label>
+    <input type="text" id="playerPosition" name="playerPosition" required>
+
+    <label for="playerHeight">Height (cm):</label>
+    <input type="text" id="playerHeight" name="playerHeight" required>
+
+    <label for="playerWeight">Weight (kg):</label>
+    <input type="text" id="playerWeight" name="playerWeight" required>
+
+    <label for="playerDraft">Draft:</label>
+    <input type="text" id="playerDraft" name="playerDraft" required>
+
+    <!-- Dropdown for selecting the team -->
+    <label for="teamId">Select Team:</label>
+      <select id="teamId" name="teamId" required>
+        {% for team in teams %}
+          <option value="{{ team[0] }}">{{ team[1] }}</option>
+        {% endfor %}
+      </select>
+
+  <button type="submit">Add Player</button>
+</form>
+
+
+
     <!-- Players Table -->
     <table border="1">
       <thead>
