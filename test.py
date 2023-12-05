@@ -242,8 +242,12 @@ def player_sort(category, sort):
     """
     )
     data = cur.fetchall()
+    cur.execute("SELECT team_id, team_name FROM team")
+    teams = cur.fetchall()
     conn.close()
-    return render_template("index.html", data=data, sign=sort, cat=category)
+    return render_template(
+        "index.html", data=data, sign=sort, cat=category, teams=teams
+    )
 
 
 @app.route("/player_stats/<int:player_id>/<player_name>")
@@ -454,7 +458,14 @@ def add_player_route():
 
         # Insert player data into the 'player' table
         sql = "INSERT INTO player (player_name, player_position, player_height, player_weight, player_draft, player_team_id) VALUES (?, ?, ?, ?, ?, ?)"
-        values = (player_name, player_position, player_height, player_weight, player_draft, team_id)
+        values = (
+            player_name,
+            player_position,
+            player_height,
+            player_weight,
+            player_draft,
+            team_id,
+        )
         execute_query(sql, values)
 
         # Redirect to the index
