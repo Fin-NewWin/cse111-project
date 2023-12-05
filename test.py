@@ -235,11 +235,7 @@ def player_stats(player_id, player_name):
         SELECT *, team_name
         FROM player_stats, team
         WHERE ps_team_id = team_id
-<<<<<<< Updated upstream
               AND ps_player_id = ?
-=======
-            AND ps_player_id = ?
->>>>>>> Stashed changes
     """,
         (player_id,),
     )
