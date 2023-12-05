@@ -235,7 +235,7 @@ def player_sort(category, sort):
     cur.execute(
         f"""
         SELECT player_id, player_name, player_position, player_height,
-               player_weight, player_draft, team_name
+               player_weight, player_draft, team_id, team_name
         FROM player, team
         WHERE player_team_id = team_id
         ORDER BY {category} {s}
