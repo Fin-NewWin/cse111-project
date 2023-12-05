@@ -209,7 +209,7 @@ def player_stats(player_id, player_name):
         SELECT *, team_name
         FROM player_stats, team 
         WHERE ps_team_id = team_id
-            AND ps_player_id = ?
+              AND ps_player_id = ?
     """, (player_id,))
     player_stats_data = cur.fetchall()
 
@@ -218,29 +218,31 @@ def player_stats(player_id, player_name):
     return render_template('player_stats.html', player_stats_data=player_stats_data, player_name=player_name)
 
 
-@app.route('/team_season/<int:team_id>/<team_name>')
-def team_season(team_id, team_name):
+@app.route('/team_info/<int:team_id>')
+def team_info(team_id):
     conn = sqlite3.connect(r"tpch.sqlite")
     cur = conn.cursor()
 
-    # Fetch team seasons
+    # Fetch basic team information with coach name
+    cur.execute("""
+        SELECT team.*, coach.coach_name, state.state_name
+        FROM team
+        JOIN coach ON team.team_coach = coach.coach_id
+        JOIN state ON team.team_state_id = state.state_id
+        WHERE team_id = ?
+    """, (team_id,))
+    team_info_data = cur.fetchone()
+
+    # Fetch team_season data
     cur.execute("""
         SELECT * FROM team_season
         WHERE ts_team_id = ?
     """, (team_id,))
     team_season_data = cur.fetchall()
 
-    # Fetch team information
-    cur.execute("""
-        SELECT * FROM team
-        WHERE team_id = ?
-    """, (team_id,))
-    team_info_data = cur.fetchone()
-
     conn.close()
 
-    return render_template('team_season.html', team_season_data=team_season_data, team_info_data=team_info_data, team_name=team_name)
-
+    return render_template('team_info.html', team_info_data=team_info_data, team_season_data=team_season_data)
 
 
 
