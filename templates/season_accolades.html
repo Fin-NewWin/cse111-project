@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Season Accolades - {{ season_accolades_data[0] }}</title>
+</head>
+<body>
+    <h1>Season Accolades - {{ season_accolades_data[0] }}</h1>
+
+    <!-- Display accolades for the selected season -->
+    <p>Champion: {{ season_accolades_data[8] }}</p>
+    <p>MVP: {{ season_accolades_data[9] }}</p>
+    <p>Rookie of the Year: {{ season_accolades_data[10] }}</p>
+    <p>Points Leader: {{ season_accolades_data[11] }}</p>
+    <p>Rebounds Leader: {{ season_accolades_data[12] }}</p>
+    <p>Assists Leader: {{ season_accolades_data[13] }}</p>
+    <p>Win Share: {{ season_accolades_data[14] }}</p>
+
+    <!-- Link back to the index page -->
+    <p><a href="{{ url_for('index') }}">Back to Players</a></p>
+</body>
+</html>

@@ -45,7 +45,7 @@
         <tbody>
             {% for stats_row in player_stats_data %}
                 <tr>
-                    <td>{{ stats_row[1] }}</td>
+                    <td><a href="{{ url_for('season_accolades', season_id=stats_row[1]) }}">{{ stats_row[1] }}</a></td>
                     <td>
                         <a href="{{ url_for('team_info', team_id=stats_row[0]) }}">{{ stats_row[-1] }}</a>
                     </td>
