@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -197,6 +197,54 @@ def index():
     data = cur.fetchall()
     conn.close()
     return render_template('index.html', data=data)
+
+
+@app.route('/player_stats/<int:player_id>/<player_name>')
+def player_stats(player_id, player_name):
+    conn = sqlite3.connect(r"tpch.sqlite")
+    cur = conn.cursor()
+
+    # Fetch player stats and team name using a JOIN
+    cur.execute("""
+        SELECT *, team_name
+        FROM player_stats, team 
+        WHERE ps_team_id = team_id
+            AND ps_player_id = ?
+    """, (player_id,))
+    player_stats_data = cur.fetchall()
+
+    conn.close()
+
+    return render_template('player_stats.html', player_stats_data=player_stats_data, player_name=player_name)
+
+
+@app.route('/team_season/<int:team_id>/<team_name>')
+def team_season(team_id, team_name):
+    conn = sqlite3.connect(r"tpch.sqlite")
+    cur = conn.cursor()
+
+    # Fetch team seasons
+    cur.execute("""
+        SELECT * FROM team_season
+        WHERE ts_team_id = ?
+    """, (team_id,))
+    team_season_data = cur.fetchall()
+
+    # Fetch team information
+    cur.execute("""
+        SELECT * FROM team
+        WHERE team_id = ?
+    """, (team_id,))
+    team_info_data = cur.fetchone()
+
+    conn.close()
+
+    return render_template('team_season.html', team_season_data=team_season_data, team_info_data=team_info_data, team_name=team_name)
+
+
+
+
+
 
 
 if __name__ == "__main__":
