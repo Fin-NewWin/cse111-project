@@ -184,15 +184,16 @@ def main():
     conn.close()
 
 
-def connect_db():
-    return sqlite3.connect('tpch.sqlite')
-
-
 @app.route('/')
 def index():
-    conn = connect_db()
+    conn = sqlite3.connect(r"tpch.sqlite")
     cur = conn.cursor()
-    cur.execute("SELECT * FROM player")
+    cur.execute("""
+        SELECT player_id, player_name, player_position, player_height, 
+               player_weight, player_draft, team_name
+        FROM player, team
+        WHERE player_team_id = team_id
+    """)
     data = cur.fetchall()
     conn.close()
     return render_template('index.html', data=data)
