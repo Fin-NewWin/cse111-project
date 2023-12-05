@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
+
 def check_tab_exist(cur: sqlite3.Cursor, table: str):
     sql = f"""
         SELECT name FROM sqlite_master WHERE type='table' AND name='{table}'
@@ -29,7 +30,7 @@ def test_table(cur: sqlite3.Cursor, table: str):
     cur.execute(sql)
     rows = cur.fetchall()
 
-    #for row in rows:
+    # for row in rows:
     #   print(row)
 
 
@@ -184,69 +185,106 @@ def main():
     conn.close()
 
 
-@app.route('/')
+@app.route("/")
 def index():
     conn = sqlite3.connect(r"tpch.sqlite")
     cur = conn.cursor()
-    cur.execute("""
-        SELECT player_id, player_name, player_position, player_height, 
+    cur.execute(
+        """
+        SELECT player_id, player_name, player_position, player_height,
                player_weight, player_draft, team_name
         FROM player, team
         WHERE player_team_id = team_id
-    """)
+    """
+    )
     data = cur.fetchall()
     conn.close()
-    return render_template('index.html', data=data)
+    return render_template("index.html", data=data)
 
 
-@app.route('/player_stats/<int:player_id>/<player_name>')
+@app.route("/player/<category>/<int:sort>")
+def player(category, sort):
+    conn = sqlite3.connect(r"tpch.sqlite")
+    cur = conn.cursor()
+    if sort == 1:
+        s = "ASC"
+    else:
+        s = "DESC"
+    cur.execute(
+        f"""
+        SELECT player_id, player_name, player_position, player_height,
+               player_weight, player_draft, team_name
+        FROM player, team
+        WHERE player_team_id = team_id
+        ORDER BY {category} {s}
+    """
+    )
+    data = cur.fetchall()
+    conn.close()
+    return render_template("index.html", data=data, sign=sort, cat=category)
+
+
+@app.route("/player_stats/<int:player_id>/<player_name>")
 def player_stats(player_id, player_name):
     conn = sqlite3.connect(r"tpch.sqlite")
     cur = conn.cursor()
 
     # Fetch player stats and team name using a JOIN
-    cur.execute("""
+    cur.execute(
+        """
         SELECT *, team_name
-        FROM player_stats, team 
+        FROM player_stats, team
         WHERE ps_team_id = team_id
               AND ps_player_id = ?
-    """, (player_id,))
+    """,
+        (player_id,),
+    )
     player_stats_data = cur.fetchall()
 
     conn.close()
 
-    return render_template('player_stats.html', player_stats_data=player_stats_data, player_name=player_name)
+    return render_template(
+        "player_stats.html",
+        player_stats_data=player_stats_data,
+        player_name=player_name,
+    )
 
 
-@app.route('/team_info/<int:team_id>')
+@app.route("/team_info/<int:team_id>")
 def team_info(team_id):
     conn = sqlite3.connect(r"tpch.sqlite")
     cur = conn.cursor()
 
     # Fetch basic team information with coach name
-    cur.execute("""
+    cur.execute(
+        """
         SELECT team.*, coach.coach_name, state.state_name
         FROM team
         JOIN coach ON team.team_coach = coach.coach_id
         JOIN state ON team.team_state_id = state.state_id
         WHERE team_id = ?
-    """, (team_id,))
+    """,
+        (team_id,),
+    )
     team_info_data = cur.fetchone()
 
     # Fetch team_season data
-    cur.execute("""
+    cur.execute(
+        """
         SELECT * FROM team_season
         WHERE ts_team_id = ?
-    """, (team_id,))
+    """,
+        (team_id,),
+    )
     team_season_data = cur.fetchall()
 
     conn.close()
 
-    return render_template('team_info.html', team_info_data=team_info_data, team_season_data=team_season_data)
-
-
-
-
+    return render_template(
+        "team_info.html",
+        team_info_data=team_info_data,
+        team_season_data=team_season_data,
+    )
 
 
 if __name__ == "__main__":
