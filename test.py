@@ -192,7 +192,7 @@ def index():
     cur.execute(
         """
         SELECT player_id, player_name, player_position, player_height,
-               player_weight, player_draft, team_name
+               player_weight, player_draft, team_id, team_name
         FROM player, team
         WHERE player_team_id = team_id
     """
@@ -315,6 +315,71 @@ def team_info(team_id):
         "team_info.html",
         team_info_data=team_info_data,
         team_season_data=team_season_data,
+        team_id=team_id,
+        team_name=team_info_data[1],
+    )
+
+
+@app.route("/team_info_sort/<team_id>/<team_name>/<category>/<int:sort>")
+def team_info_sort(team_id, team_name, category, sort):
+    conn = sqlite3.connect(r"tpch.sqlite")
+    cur = conn.cursor()
+
+    # Fetch basic team information with coach name
+    if sort == 1:
+        s = "ASC"
+    else:
+        s = "DESC"
+    cur.execute(
+        """
+        SELECT *, coach_name, state_name
+        FROM team, coach, state
+        WHERE team.team_coach = coach_id
+            AND team_state_id = state_id
+            AND team_id = ?
+    """,
+        (team_id,),
+    )
+    team_info_data = cur.fetchone()
+
+    if category in [
+        "ts_season_id",
+        "ts_wins",
+        "ts_losses",
+        "ts_wl",
+        "ts_finish",
+        "ts_srs",
+        "ts_pace",
+        "ts_ortg",
+        "ts_drtg",
+    ]:
+        # Fetch team_season data
+        cur.execute(
+            f"""
+            SELECT * FROM team_season
+            WHERE ts_team_id = {team_id}
+            ORDER BY {category} {s}
+        """
+        )
+    else:
+        cur.execute(
+            f"""
+            SELECT * FROM team_season
+            WHERE ts_team_id = {team_id}
+        """
+        )
+    team_season_data = cur.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "team_info.html",
+        team_info_data=team_info_data,
+        team_season_data=team_season_data,
+        team_id=team_id,
+        team_name=team_info_data[1],
+        sign=sort,
+        cat=category,
     )
 
 

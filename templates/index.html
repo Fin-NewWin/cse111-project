@@ -143,7 +143,7 @@
           <td>{{ row[5] }}</td>
           <td>
             {% if row[6] not in ['Retired', 'Free Agency'] %}
-            <a href="{{ url_for('team_info', team_id=row[0]) }}"
+            <a href="{{ url_for('team_info', team_id=row[6]) }}"
               >{{ row[-1] }}</a
             >
             {% else %} {{ row[6] }} {% endif %}
