@@ -16,7 +16,7 @@
                 <th>Height (cm)</th>
                 <th>Weight (kg)</th>
                 <th>Draft</th>
-                <th>Team ID</th>
+                <th>Team</th>
             </tr>
         </thead>
         <tbody id="playerTableBody">
@@ -30,7 +30,13 @@
                     <td>{{ row[3] }}</td>
                     <td>{{ row[4] }}</td>
                     <td>{{ row[5] }}</td>
-                    <td>{{ row[6] }}</td>
+                    <td>
+                        {% if row[6] not in ['Retired', 'Free Agency'] %}
+                            <a href="#" onclick="showTeamInformation({{ row[0] }})">{{ row[6] }}</a>
+                        {% else %}
+                            {{ row[6] }}
+                        {% endif %}   <!--once team information is shown, show coach in place of its ID-->
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
